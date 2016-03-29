@@ -1,0 +1,26 @@
+{
+  "name": "momentjs",
+  "version": "1.0.0",
+  "description": "javascript 日期处理",
+  "main": "moment.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvpvvp/momentjs.git"
+  },
+  "keywords": [
+    "moment",
+    "date"
+  ],
+  "author": "alias",
+  "license": "The MIT License",
+  "_npmUser": {
+    "name": "vvpvvp",
+    "email": "a8918929@sina.com.cn"
+  },
+  "dependencies": {
+  },
+  "bugs": {
+    "url": "https://github.com/vvpvvp/momentjs/issues"
+  },
+  "homepage": "https://github.com/vvpvvp/momentjs#readme"
+}
