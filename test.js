@@ -33,3 +33,5 @@ console.log(`moment("201412031223").format("f") \/\/${moment("201412031223").for
 
 console.log(`moment().year(2018).format() \/\/${moment().year(2018).format()}`);
 console.log(`moment().isLeapYear() \/\/${moment().isLeapYear()}`);
+
+console.log(moment().time());
