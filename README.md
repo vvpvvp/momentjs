@@ -1,3 +1,4 @@
+
 # momentjs
 超级简洁的日期处理Util，比moment.js小很多。
 
@@ -98,5 +99,3 @@ moment().date() //29
 moment().date(4).format() //2016-03-04
 moment().isLeapYear() //是否为闰年 true
 ```
-
-
