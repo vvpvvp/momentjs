@@ -16,6 +16,7 @@ const minutes = 1000 * 60;
 const hours = minutes * 60;
 const days = hours * 24;
 const years = days * 365;
+const dayPianCha = 0.3333334;
 
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 const DAY_STRING = ['上午', '下午'];
@@ -41,6 +42,9 @@ let Utils = {
             }
             else if (Utils.isString(arg_1)) {
                 _date = Utils.parse(arg_1);
+            }
+            else if (arg_1 instanceof _moment) {
+                moment_obj = arg_1;
             }
         }
         moment_obj._date = _date;
@@ -92,7 +96,7 @@ let Utils = {
         return Math.floor(date.getTime() / 1000);
     },
     getDays(date) {
-        return Math.floor(date.getTime() / 1000);
+        return Math.floor(date.getTime() /60/24/60/ 1000+dayPianCha);
     },
     compare(date1, date2) {
         return Utils.getDays(date1) - Utils.getDays(date2);
@@ -158,6 +162,15 @@ _moment.prototype = {
     toString() {
         return this._date.toString();
     },
+    distance(_m,type){
+        let m = this;
+        type = type||"day";
+        _m = moment(_m);
+        switch(type){
+            case "day":
+                return Utils.getDays(m._date) - Utils.getDays(_m._date);
+        }
+    },
     isLeapYear() {
         return Utils.isLeapYear(this.year());
     },
@@ -177,6 +190,7 @@ let momentPrototype__proto = _moment.prototype;
 const methods = {
     "year": "FullYear",
     "day": "Day",
+    "date": "Date",
     "month": "Month",
     "hours": "Hours",
     "milliseconds": "Milliseconds",

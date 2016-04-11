@@ -19,6 +19,7 @@ var minutes = 1000 * 60;
 var hours = minutes * 60;
 var days = hours * 24;
 var years = days * 365;
+var dayPianCha = 0.3333334;
 
 var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 var DAY_STRING = ['上午', '下午'];
@@ -41,6 +42,8 @@ var Utils = {
                 _date = arg_1;
             } else if (Utils.isString(arg_1)) {
                 _date = Utils.parse(arg_1);
+            } else if (arg_1 instanceof _moment) {
+                moment_obj = arg_1;
             }
         }
         moment_obj._date = _date;
@@ -92,7 +95,7 @@ var Utils = {
         return Math.floor(date.getTime() / 1000);
     },
     getDays: function getDays(date) {
-        return Math.floor(date.getTime() / 1000);
+        return Math.floor(date.getTime() / 60 / 24 / 60 / 1000 + dayPianCha);
     },
     compare: function compare(date1, date2) {
         return Utils.getDays(date1) - Utils.getDays(date2);
@@ -155,6 +158,15 @@ _moment.prototype = {
     toString: function toString() {
         return this._date.toString();
     },
+    distance: function distance(_m, type) {
+        var m = this;
+        type = type || "day";
+        _m = moment(_m);
+        switch (type) {
+            case "day":
+                return Utils.getDays(m._date) - Utils.getDays(_m._date);
+        }
+    },
     isLeapYear: function isLeapYear() {
         return Utils.isLeapYear(this.year());
     },
@@ -174,6 +186,7 @@ var momentPrototype__proto = _moment.prototype;
 var methods = {
     "year": "FullYear",
     "day": "Day",
+    "date": "Date",
     "month": "Month",
     "hours": "Hours",
     "milliseconds": "Milliseconds",

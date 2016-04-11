@@ -98,4 +98,5 @@ moment().time(123131312321).format() //1973-11-26
 moment().date() //29
 moment().date(4).format() //2016-03-04
 moment().isLeapYear() //是否为闰年 true
+moment("2012-09-21").distance("2012-09-20 23:59:59") //两个日期间相隔天数，纠正日期计算偏差 1
 ```
