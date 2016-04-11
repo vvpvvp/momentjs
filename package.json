@@ -1,6 +1,6 @@
 {
   "name": "momentjs",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "javascript 日期处理",
   "main": "build/moment.js",
   "repository": {

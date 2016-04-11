@@ -44,7 +44,7 @@ var moment = require('./moment');
 // console.log(moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("fff"));
 // console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
 
-console.log(moment("2012-10-03 23:59:59").endOf(moment.DAY).format("ff"));
+console.log(moment("2012-10-03 23:59:59").month(8).month());
 console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
 console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
 
