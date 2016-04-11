@@ -33,4 +33,5 @@ var moment = require('./moment');
 
 // console.log(`moment().year(2018).format() \/\/${moment().year(2018).format()}`);
 // console.log(`moment().isLeapYear() \/\/${moment().isLeapYear()}`);
-console.log(moment("2012-10-02 20:20").time());
+console.log(moment("2012-10-01 23:59:59").distance("2012-10-02"));
+

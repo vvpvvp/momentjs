@@ -16,7 +16,7 @@ const minutes = 1000 * 60;
 const hours = minutes * 60;
 const days = hours * 24;
 const years = days * 365;
-const dayPianCha = 0.3333334;
+const MSE = new Date(1970,0,1,0,0,0).getTime();
 
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 const DAY_STRING = ['上午', '下午'];
@@ -96,7 +96,7 @@ let Utils = {
         return Math.floor(date.getTime() / 1000);
     },
     getDays(date) {
-        return Math.floor(date.getTime() /60/24/60/ 1000+dayPianCha);
+        return Math.floor((date.getTime()+MSE) /60/24/60/ 1000);
     },
     compare(date1, date2) {
         return Utils.getDays(date1) - Utils.getDays(date2);
