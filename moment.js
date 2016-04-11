@@ -12,15 +12,16 @@ const FORMAT_LIST = {
     "nn": "MM月DD日",
 }
 
-const minutes = 1000 * 60;
-const hours = minutes * 60;
-const days = hours * 24;
-const years = days * 365;
-const MSE = new Date(1970,0,1,0,0,0).getTime();
+const _SECONDS = 1000;
+const _MINUTES = 1000 * 60;
+const _HOURS = 1000 * 60 * 60;
+const _DAYS = 1000 * 60 * 60 * 24;
+const _YEARS = _DAYS * 365;
+const MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 const DAY_STRING = ['上午', '下午'];
-let _moment = function () {
+let _moment = function() {
     Utils.initMoment(this, ...arguments);
     return this;
 };
@@ -32,18 +33,14 @@ let Utils = {
             if (Utils.isNumber(arg_1)) {
                 if (arg_1 < 9999999999) arg_1 = arg_1 * 1000;
                 _date.setTime(arg_1);
-            }
-            else if (Utils.isArray(arg_1)) {
+            } else if (Utils.isArray(arg_1)) {
                 Utils.padMonth(arg_1);
                 _date = new Date(...arg_1);
-            }
-            else if (Utils.isDate(arg_1)) {
+            } else if (Utils.isDate(arg_1)) {
                 _date = arg_1;
-            }
-            else if (Utils.isString(arg_1)) {
+            } else if (Utils.isString(arg_1)) {
                 _date = Utils.parse(arg_1);
-            }
-            else if (arg_1 instanceof _moment) {
+            } else if (arg_1 instanceof _moment) {
                 moment_obj = arg_1;
             }
         }
@@ -96,10 +93,13 @@ let Utils = {
         return Math.floor(date.getTime() / 1000);
     },
     getDays(date) {
-        return Math.floor((date.getTime()+MSE) /60/24/60/ 1000);
+        return Math.floor((date.getTime() - MSE) / _DAYS);
     },
-    compare(date1, date2) {
-        return Utils.getDays(date1) - Utils.getDays(date2);
+    getHours(date) {
+        return Math.floor((date.getTime() - MSE) / _HOURS);
+    },
+    getMonths(date) {
+        return date.getYear() * 12 + date.getMonth() + 1;
     },
     isObject(input) {
         return Object.prototype.toString.call(input) === '[object Object]';
@@ -134,13 +134,14 @@ let Utils = {
         return a;
     },
     makeGetSet(unit) {
-        return function (value) {
+        return function(value) {
             if (value != undefined) {
+                // if(unit=="Month")value = value>0?(value-1):0;
                 Date.prototype["set" + unit].call(this._date, value);
                 return this;
-            }
-            else {
-                return Date.prototype["get" + unit].call(this._date);
+            } else {
+                return  Date.prototype["get" + unit].call(this._date);
+                // return unit=="Month"?(result+1):result;
             }
         };
     }
@@ -162,14 +163,21 @@ _moment.prototype = {
     toString() {
         return this._date.toString();
     },
-    distance(_m,type){
+    distance(_m, type) {
         let m = this;
-        type = type||"day";
+        type = type || moment.DAY;
         _m = moment(_m);
-        switch(type){
-            case "day":
+        switch (type) {
+            case moment.HOUR:
+                return Utils.getHours(m._date) - Utils.getHours(_m._date);
+            case moment.DAY:
                 return Utils.getDays(m._date) - Utils.getDays(_m._date);
+            case moment.MONTH:
+                return Utils.getMonths(m._date) - Utils.getMonths(_m._date);
+            case moment.YEAR:
+                return m._date.getYear() - _m._date.getYear();
         }
+        return 0;
     },
     isLeapYear() {
         return Utils.isLeapYear(this.year());
@@ -182,6 +190,71 @@ _moment.prototype = {
     },
     isAfter() {
         return Utils.timestamp(this._date);
+    },
+    add(num, type) {
+        let m = this;
+        num = parseInt(num);
+        type = type || moment.DAY;
+
+        switch (type) {
+            case moment.DAY:
+                m.time(m.time() + (num * _DAYS));
+                break;
+            case moment.MONTH:
+                let month_add = m.month() + num;
+                let year_add = Math.floor(month_add / 12);
+                month_add = month_add % 12;
+                m.add(year_add, moment.YEAR);
+                m.month(month_add);
+                break;
+            case moment.YEAR:
+                m.year(m.year() + num);
+                break;
+            case moment.HOUR:
+                m.time(m.time() + (num * _HOURS));
+                break;
+            case moment.MINUTE:
+                m.time(m.time() + (num * _MINUTES));
+                break;
+            case moment.SECOND:
+                m.time(m.time() + (num * _SECONDS));
+                break;
+        }
+        return m;
+    },
+    endOf(type) {
+        let m = this;
+        type = type || moment.DAY;
+        m.startOf(type);
+        m.add(1,type);
+        if(moment.DAY==type){
+            m.add(-1,moment.SECOND);
+        }else{
+            m.add(-1,moment.DAY);
+        }
+        return m;
+    },
+    startOf(type) {
+        let m = this;
+        type = type || moment.DAY;
+        switch (type) {
+            case moment.DAY:
+                m.time(Math.floor((m.time())/_DAYS)*_DAYS+MSE);
+                break;
+            case moment.MONTH:
+                m.date(1);
+                m.startOf(moment.DAY);
+                break;
+            case moment.YEAR:
+                m.month(0);
+                m.date(1);
+                m.startOf(moment.DAY);
+                break;
+            case moment.HOUR:
+                m.time(Math.floor((m.time())/_HOURS)*_HOURS+MSE);
+                break;
+        }
+        return m;
     }
 };
 
@@ -195,6 +268,7 @@ const methods = {
     "hours": "Hours",
     "milliseconds": "Milliseconds",
     "seconds": "Seconds",
+    "minutes": "Minutes",
     "time": "Time",
 };
 
@@ -202,21 +276,29 @@ for (let unit in methods) {
     momentPrototype__proto[unit] = Utils.makeGetSet(methods[unit]);
 }
 
-let moment = function (param) {
+let moment = function(param) {
     if (Utils.isObject(param)) {
         //config
         if (param.formatString && Utils.isObject(param.formatString)) {
             Utils.extend(FORMAT_LIST, param.formatString);
         }
-    }else{
+    } else {
         return new _moment(param);
     }
 };
 
-moment.prototype.config = function (param) {
+moment.prototype.config = function(param) {
     if (param.formatString && Utils.isObject(param.formatString)) {
         Utils.extend(FORMAT_LIST, param.formatString);
     }
 };
+
+moment.SECOND = 2;
+moment.MINUTE = 3;
+moment.HOUR = 4;
+moment.DAY = 5;
+moment.MONTH = 6;
+moment.YEAR = 7;
+
 
 module.exports = moment;

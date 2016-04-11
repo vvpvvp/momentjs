@@ -85,7 +85,7 @@ moment("20141203").format("f") //2014-12-03 00:00:00
 moment("201412031223").format("f") //2014-12-03 12:23:00
 ```
 
-###附加函数
+###获取数值函数
 `month()`方法，对月份做了修补。
 
 ```javascript
@@ -93,11 +93,74 @@ moment().year() //2016
 moment().year(2018).format() //2018-03-29
 moment().month() //2016-03-29
 moment().month(4).format() //2016-04-29
+moment().minutes() //59
+moment().minutes(34)
 moment().time() //1459242450800
 moment().time(123131312321).format() //1973-11-26
 moment().date() //29
 moment().date(4).format() //2016-03-04
 moment().isLeapYear() //是否为闰年 true
 
+```
+###distance
+
+```javascript
+
 moment("2012-09-21").distance("2012-09-20 23:59:59") //两个日期间相隔天数，纠正日期计算偏差 1
+moment("2012-09-21").distance("2012-09-20 23:59:59",moment.DAY) //两个日期间相隔天数 1
+moment("2012-09-21").distance("2012-08-20 23:59:59",moment.MONTH) //两个日期间相隔月数 1
+moment("2012-09-21").distance("2011-09-20 23:59:59",moment.YEAR) //两个日期间相隔年数 1
+
+```
+###add，添加数据函数
+
+```javascript
+
+console.log(moment("2012-10-03 23:59:59").add(1,moment.DAY).format("fff")); 
+//2012年10月04日 23点59分59秒 星期四
+
+console.log(moment("2012-10-03 23:59:59").add(-1,moment.DAY).format("fff"));
+//2012年10月02日 23点59分59秒 星期二
+
+console.log(moment("2012-10-03 23:59:59").add(26,moment.MONTH).format("fff"));
+//2014年12月03日 23点59分59秒 星期三
+
+console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("fff"));
+//2011年10月03日 23点59分59秒 星期一
+
+```
+
+###startOf
+
+```javascript
+
+console.log(moment("2012-10-03 23:59:59").startOf(moment.DAY).format("fff"));
+//2012年10月03日 00点00分00秒 星期三
+
+console.log(moment("2012-10-03 23:59:59").startOf(moment.YEAR).format("fff"));
+//2012年01月01日 00点00分00秒 星期日
+
+console.log(moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("fff"));
+//2012年10月01日 00点00分00秒 星期一
+
+console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
+//2012年10月03日 15点00分00秒 星期三
+
+```
+
+
+###endOf
+
+```javascript
+
+
+console.log(moment("2012-10-03 23:59:59").endOf(moment.DAY).format("ff"));
+//2012年10月03日 23点59分59秒
+
+console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
+//2012-12-31
+
+console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
+//2012-10-31
+
 ```

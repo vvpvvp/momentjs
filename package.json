@@ -1,6 +1,6 @@
 {
   "name": "momentjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "javascript 日期处理",
   "main": "build/moment.js",
   "repository": {
@@ -32,7 +32,6 @@
     "build": "babel ./moment.js -d build"
   },
   "homepage": "https://github.com/vvpvvp/momentjs#readme",
-  "readme": "# momentjs\n超级简洁的日期处理Util，比moment.js小很多。\n\n##安装\n```\nnpm install momentjs\n```\n建议本地安装\n\n```\nnpm install --save momentjs\n```\n##文档\n\n###format\n格式化日期转换标准\n- YYYY/yyyy:年份\n- M:月份\n- MM:月份，个数添0\n- D/d:天数\n- DD/dd:天数，个数添0\n- H/h:小时\n- HH/hh:小时，个数添0\n- m:分钟\n- mm:分钟，个数添0\n- S/s:秒数\n- SS/ss:秒数，个数添0\n- w:星期，返回中文：['日', '一', '二', '三', '四', '五', '六']\n- q:上下午，返回中文：['上午', '下午']\n\n####内置简洁的格式化\n- \"l\": \"YYYY-MM-DD\",\n- \"ll\": \"YYYY年MM月DD日\",\n- \"k\": \"YYYY-MM-DD hh:mm\",\n- \"kk\": \"YYYY年MM月DD日 hh点mm分\",\n- \"kkk\": \"YYYY年MM月DD日 hh点mm分 q\",\n- \"f\": \"YYYY-MM-DD hh:mm:ss\",\n- \"ff\": \"YYYY年MM月DD日 hh点mm分ss秒\",\n- \"fff\": \"YYYY年MM月DD日 hh点mm分ss秒 星期w\",\n- \"n\": \"MM-DD\",\n- \"nn\": \"MM月DD日\",\n\n```javascript\n//各种format\nmoment() // Tue Mar 29 2016 16:52:56 GMT+0800 (CST)\nmoment().toString() // Tue Mar 29 2016 16:52:56 GMT+0800 (CST)\nmoment().format() // 2016-03-29\nmoment().format(\"l\") // 2016-03-29\nmoment().format(\"ll\") // 2016年03月29日\nmoment().format(\"k\") // 2016-03-29 16:52\nmoment().format(\"kk\") // 2016年03月29日 16点52分\nmoment().format(\"kkk\") // 2016年03月29日 16点52分 下午\nmoment().format(\"f\") // 2016-03-29 16:52:56\nmoment().format(\"ff\") // 2016年03月29日 16点52分56秒\nmoment().format(\"fff\") // 2016年03月29日 16点52分56秒 星期二\nmoment().format(\"n\") // 03-29\nmoment().format(\"nn\") // 03月29日\nmoment().format(\"YYYY\") // 2016\n```\n####定制简洁格式\n\n```javascript\nmoment({\n    formatString: {\n        \"r\": \"YYYY\"\n    }\n});\n\nmoment().format(\"r\") // 2016\n\n```\n###初始化数据\n这里初始化的时候，对月份做了修补。\n\n```javascript\nmoment(1459235037).format() //秒 2016-03-29\nmoment(1459235037000).format() //毫秒 2016-03-29\nmoment([2016,12,23,4,3,5]).format(\"f\") //月份自动补充，执行：new Date(2016,11,23,4,3,5) 2016-12-23 04:03:05\nmoment([2015,12,3]).format(\"f\") //执行：new Date(2015,11,3) 2015-12-03\nmoment(\"2014-12-03\").format(\"f\") //2014-12-03 00:00:00\nmoment(\"2014-12-03 12:34\").format(\"f\") //2014-12-03 12:34:00\nmoment(\"2014-12-03 12:34:12\").format(\"f\") //2014-12-03 12:34:34\nmoment(\"20141203\").format(\"f\") //2014-12-03 00:00:00\nmoment(\"201412031223\").format(\"f\") //2014-12-03 12:23:00\n```\n\n###附加函数\n`month()`方法，对月份做了修补。\n\n```javascript\nmoment().year() //2016\nmoment().year(2018).format() //2018-03-29\nmoment().month() //2016-03-29\nmoment().month(4).format() //2016-04-29\nmoment().time() //1459242450800\nmoment().time(123131312321).format() //1973-11-26\nmoment().date() //29\nmoment().date(4).format() //2016-03-04\nmoment().isLeapYear() //是否为闰年 true\n```\n\n\n",
   "readmeFilename": "README.md",
   "gitHead": "79f9fc223b1be7cfaf9604599e4c4d4a58aaa82c",
   "_id": "momentjs@1.0.2",

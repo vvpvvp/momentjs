@@ -15,11 +15,12 @@ var FORMAT_LIST = {
     "nn": "MM月DD日"
 };
 
-var minutes = 1000 * 60;
-var hours = minutes * 60;
-var days = hours * 24;
-var years = days * 365;
-var dayPianCha = 0.3333334;
+var _SECONDS = 1000;
+var _MINUTES = 1000 * 60;
+var _HOURS = 1000 * 60 * 60;
+var _DAYS = 1000 * 60 * 60 * 24;
+var _YEARS = _DAYS * 365;
+var MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
 var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 var DAY_STRING = ['上午', '下午'];
@@ -95,10 +96,13 @@ var Utils = {
         return Math.floor(date.getTime() / 1000);
     },
     getDays: function getDays(date) {
-        return Math.floor(date.getTime() / 60 / 24 / 60 / 1000 + dayPianCha);
+        return Math.floor((date.getTime() - MSE) / _DAYS);
     },
-    compare: function compare(date1, date2) {
-        return Utils.getDays(date1) - Utils.getDays(date2);
+    getHours: function getHours(date) {
+        return Math.floor((date.getTime() - MSE) / _HOURS);
+    },
+    getMonths: function getMonths(date) {
+        return date.getYear() * 12 + date.getMonth() + 1;
     },
     isObject: function isObject(input) {
         return Object.prototype.toString.call(input) === '[object Object]';
@@ -135,10 +139,12 @@ var Utils = {
     makeGetSet: function makeGetSet(unit) {
         return function (value) {
             if (value != undefined) {
+                // if(unit=="Month")value = value>0?(value-1):0;
                 Date.prototype["set" + unit].call(this._date, value);
                 return this;
             } else {
                 return Date.prototype["get" + unit].call(this._date);
+                // return unit=="Month"?(result+1):result;
             }
         };
     }
@@ -160,12 +166,19 @@ _moment.prototype = {
     },
     distance: function distance(_m, type) {
         var m = this;
-        type = type || "day";
+        type = type || moment.DAY;
         _m = moment(_m);
         switch (type) {
-            case "day":
+            case moment.HOUR:
+                return Utils.getHours(m._date) - Utils.getHours(_m._date);
+            case moment.DAY:
                 return Utils.getDays(m._date) - Utils.getDays(_m._date);
+            case moment.MONTH:
+                return Utils.getMonths(m._date) - Utils.getMonths(_m._date);
+            case moment.YEAR:
+                return m._date.getYear() - _m._date.getYear();
         }
+        return 0;
     },
     isLeapYear: function isLeapYear() {
         return Utils.isLeapYear(this.year());
@@ -178,6 +191,71 @@ _moment.prototype = {
     },
     isAfter: function isAfter() {
         return Utils.timestamp(this._date);
+    },
+    add: function add(num, type) {
+        var m = this;
+        num = parseInt(num);
+        type = type || moment.DAY;
+
+        switch (type) {
+            case moment.DAY:
+                m.time(m.time() + num * _DAYS);
+                break;
+            case moment.MONTH:
+                var month_add = m.month() + num;
+                var year_add = Math.floor(month_add / 12);
+                month_add = month_add % 12;
+                m.add(year_add, moment.YEAR);
+                m.month(month_add);
+                break;
+            case moment.YEAR:
+                m.year(m.year() + num);
+                break;
+            case moment.HOUR:
+                m.time(m.time() + num * _HOURS);
+                break;
+            case moment.MINUTE:
+                m.time(m.time() + num * _MINUTES);
+                break;
+            case moment.SECOND:
+                m.time(m.time() + num * _SECONDS);
+                break;
+        }
+        return m;
+    },
+    endOf: function endOf(type) {
+        var m = this;
+        type = type || moment.DAY;
+        m.startOf(type);
+        m.add(1, type);
+        if (moment.DAY == type) {
+            m.add(-1, moment.SECOND);
+        } else {
+            m.add(-1, moment.DAY);
+        }
+        return m;
+    },
+    startOf: function startOf(type) {
+        var m = this;
+        type = type || moment.DAY;
+        switch (type) {
+            case moment.DAY:
+                m.time(Math.floor(m.time() / _DAYS) * _DAYS + MSE);
+                break;
+            case moment.MONTH:
+                m.date(1);
+                m.startOf(moment.DAY);
+                break;
+            case moment.YEAR:
+                m.month(0);
+                m.date(1);
+                m.startOf(moment.DAY);
+                break;
+            case moment.HOUR:
+                m.time(Math.floor(m.time() / _HOURS) * _HOURS + MSE);
+                break;
+        }
+        return m;
     }
 };
 
@@ -191,6 +269,7 @@ var methods = {
     "hours": "Hours",
     "milliseconds": "Milliseconds",
     "seconds": "Seconds",
+    "minutes": "Minutes",
     "time": "Time"
 };
 
@@ -214,5 +293,12 @@ moment.prototype.config = function (param) {
         Utils.extend(FORMAT_LIST, param.formatString);
     }
 };
+
+moment.SECOND = 2;
+moment.MINUTE = 3;
+moment.HOUR = 4;
+moment.DAY = 5;
+moment.MONTH = 6;
+moment.YEAR = 7;
 
 module.exports = moment;
