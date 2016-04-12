@@ -84,7 +84,7 @@ moment({
     formatString: {
         "r": "YYYY"
     }
-});
+}
 
 moment().format("r") // 2016
 
@@ -129,19 +129,19 @@ moment("2012-09-21").distance("2011-09-20 23:59:59",moment.YEAR)
 `moment.add(Moment|String|Number|Date|Array)`
 
 ```javascript
-console.log(moment("2012-10-03 23:59:59").add(1,moment.DAY).format("fff")); 
+moment("2012-10-03 23:59:59").add(1,moment.DAY).format("fff")
 //2012年10月04日 23点59分59秒 星期四
 
-console.log(moment("2012-10-03 23:59:59").add(-1,moment.DAY).format("fff"));
+moment("2012-10-03 23:59:59").add(-1,moment.DAY).format("fff")
 //2012年10月02日 23点59分59秒 星期二
 
-console.log(moment("2012-10-03 23:59:59").add(26,moment.MONTH).format("fff"));
+moment("2012-10-03 23:59:59").add(26,moment.MONTH).format("fff")
 //2014年12月03日 23点59分59秒 星期三
 
-console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("fff"));
+moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("fff")
 //2011年10月03日 23点59分59秒 星期一
 
-console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
+moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff")
 //2012年10月04日 00点00分59秒
 ```
 
@@ -150,16 +150,16 @@ console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
 `moment.startOf(Moment.TYPE)`
 
 ```javascript
-console.log(moment("2012-10-03 23:59:59").startOf(moment.DAY).format("fff"));
+moment("2012-10-03 23:59:59").startOf(moment.DAY).format("fff")
 //2012年10月03日 00点00分00秒 星期三
 
-console.log(moment("2012-10-03 23:59:59").startOf(moment.YEAR).format("fff"));
+moment("2012-10-03 23:59:59").startOf(moment.YEAR).format("fff")
 //2012年01月01日 00点00分00秒 星期日
 
-console.log(moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("fff"));
+moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("fff")
 //2012年10月01日 00点00分00秒 星期一
 
-console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
+moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff")
 //2012年10月03日 15点00分00秒 星期三
 ```
 
@@ -169,13 +169,13 @@ console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
 `moment.endOf(Moment.TYPE)`
 
 ```javascript
-console.log(moment("2012-10-03 23:59:59").endOf(moment.DAY).format("ff"));
+moment("2012-10-03 23:59:59").endOf(moment.DAY).format("ff")
 //2012年10月03日 23点59分59秒
 
-console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
+moment("2012-10-03 23:59:59").endOf(moment.YEAR).format()
 //2012-12-31
 
-console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
+moment("2012-10-03 23:59:59").endOf(moment.MONTH).format()
 //2012-10-31
 ```
 
