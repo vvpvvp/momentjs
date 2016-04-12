@@ -12,20 +12,50 @@ npm install momentjs
 npm install --save momentjs
 ```
 ##文档
+###初始化数据
+
+初始化的时候，对月份做了修补。
+
+`moment(String|Number|Date|Array)`
+
+```javascript
+moment(1459235037).format() //秒 2016-03-29
+moment(1459235037000).format() //毫秒 2016-03-29
+moment([2016,12,23,4,3,5]).format("f") 
+//月份自动补充，执行：new Date(2016,11,23,4,3,5) 2016-12-23 04:03:05
+moment([2015,12,3]).format("f") 
+//执行：new Date(2015,11,3) 2015-12-03
+moment("2014-12-03").format("f") //2014-12-03 00:00:00
+moment("2014-12-03 12:34").format("f") //2014-12-03 12:34:00
+moment("2014-12-03 12:34:12").format("f") //2014-12-03 12:34:34
+moment("20141203").format("f") //2014-12-03 00:00:00
+moment("201412031223").format("f") //2014-12-03 12:23:00
+```
+
+###moment.NOW
+当对时间做一定处理的时候使用，属于moment.TYPE的一种，不可以作为moment()使用。
+
+```javascript
+moment("2012-09-21").distance(moment.NOW);
+//和当前时间的相差天数
+
+moment("2012-09-21").distance(moment.NOW,moment.MONTH);
+//和当前时间的相差月数
+```
 
 ###format
 格式化日期转换标准
 - YYYY/yyyy:年份
 - M:月份
-- MM:月份，个数添0
+- MM:月份，个位补充0
 - D/d:天数
-- DD/dd:天数，个数添0
+- DD/dd:天数，个位补充0
 - H/h:小时
-- HH/hh:小时，个数添0
+- HH/hh:小时，个位补充0
 - m:分钟
-- mm:分钟，个数添0
+- mm:分钟，个位补充0
 - S/s:秒数
-- SS/ss:秒数，个数添0
+- SS/ss:秒数，个位补充0
 - w:星期，返回中文：['日', '一', '二', '三', '四', '五', '六']
 - q:上下午，返回中文：['上午', '下午']
 
@@ -70,20 +100,6 @@ moment({
 moment().format("r") // 2016
 
 ```
-###初始化数据
-这里初始化的时候，对月份做了修补。
-
-```javascript
-moment(1459235037).format() //秒 2016-03-29
-moment(1459235037000).format() //毫秒 2016-03-29
-moment([2016,12,23,4,3,5]).format("f") //月份自动补充，执行：new Date(2016,11,23,4,3,5) 2016-12-23 04:03:05
-moment([2015,12,3]).format("f") //执行：new Date(2015,11,3) 2015-12-03
-moment("2014-12-03").format("f") //2014-12-03 00:00:00
-moment("2014-12-03 12:34").format("f") //2014-12-03 12:34:00
-moment("2014-12-03 12:34:12").format("f") //2014-12-03 12:34:34
-moment("20141203").format("f") //2014-12-03 00:00:00
-moment("201412031223").format("f") //2014-12-03 12:23:00
-```
 
 ###获取数值函数
 `month()`方法，对月份做了修补。
@@ -103,6 +119,8 @@ moment().isLeapYear() //是否为闰年 true
 ```
 ###distance
 
+`moment.distance(Moment|String|Number|Date|Array)`
+
 ```javascript
 moment("2012-09-21").distance("2012-09-20 23:59:59") 
 //两个日期间相隔天数，纠正日期计算偏差 1
@@ -117,7 +135,9 @@ moment("2012-09-21").distance("2011-09-20 23:59:59",moment.YEAR)
 //两个日期间相隔年数 1
 
 ```
-###add，添加数据函数
+###add
+`add`方法，对日期做加减法，只有add函数，如果需要减法，则传递负数。
+`moment.add(Moment|String|Number|Date|Array)`
 
 ```javascript
 console.log(moment("2012-10-03 23:59:59").add(1,moment.DAY).format("fff")); 
@@ -131,9 +151,14 @@ console.log(moment("2012-10-03 23:59:59").add(26,moment.MONTH).format("fff"));
 
 console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("fff"));
 //2011年10月03日 23点59分59秒 星期一
+
+console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
+//2012年10月04日 00点00分59秒
 ```
 
 ###startOf
+`startOf`方法，对日期做一定规则的减法。
+`moment.startOf(Moment.TYPE)`
 
 ```javascript
 console.log(moment("2012-10-03 23:59:59").startOf(moment.DAY).format("fff"));
@@ -151,6 +176,8 @@ console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
 
 
 ###endOf
+`endOf`方法，对日期做一定规则的加法。
+`moment.endOf(Moment.TYPE)`
 
 ```javascript
 console.log(moment("2012-10-03 23:59:59").endOf(moment.DAY).format("ff"));
@@ -162,3 +189,4 @@ console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
 console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
 //2012-10-31
 ```
+

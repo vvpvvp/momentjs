@@ -192,6 +192,15 @@ _moment.prototype = {
     isAfter: function isAfter() {
         return Utils.timestamp(this._date);
     },
+    month: function month(num) {
+        var m = this;
+        if (num == undefined) {
+            return m._date.getMonth() + 1;
+        }
+        num = parseInt(num);
+        num = m._date.setMonth(num - 1);
+        return m;
+    },
     add: function add(num, type) {
         var m = this;
         num = parseInt(num);
@@ -265,7 +274,6 @@ var methods = {
     "year": "FullYear",
     "day": "Day",
     "date": "Date",
-    "month": "Month",
     "hours": "Hours",
     "milliseconds": "Milliseconds",
     "seconds": "Seconds",
