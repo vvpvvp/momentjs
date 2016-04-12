@@ -32,17 +32,6 @@ moment("20141203").format("f") //2014-12-03 00:00:00
 moment("201412031223").format("f") //2014-12-03 12:23:00
 ```
 
-###moment.NOW
-当对时间做一定处理的时候使用，属于moment.TYPE的一种，不可以作为moment()使用。
-
-```javascript
-moment("2012-09-21").distance(moment.NOW);
-//和当前时间的相差天数
-
-moment("2012-09-21").distance(moment.NOW,moment.MONTH);
-//和当前时间的相差月数
-```
-
 ###format
 格式化日期转换标准
 - YYYY/yyyy:年份

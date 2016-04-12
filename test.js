@@ -1,3 +1,4 @@
+// var moment = require('./build/moment.min');
 var moment = require('./moment');
 
 // moment({
