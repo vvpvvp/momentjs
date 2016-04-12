@@ -146,7 +146,7 @@ console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
 ```
 
 ###startOf
-`startOf`方法，对日期做一定规则的减法。
+`startOf`方法，对日期做一定规则的减法。  
 `moment.startOf(Moment.TYPE)`
 
 ```javascript
@@ -165,7 +165,7 @@ console.log(moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff"));
 
 
 ###endOf
-`endOf`方法，对日期做一定规则的加法。
+`endOf`方法，对日期做一定规则的加法。  
 `moment.endOf(Moment.TYPE)`
 
 ```javascript
