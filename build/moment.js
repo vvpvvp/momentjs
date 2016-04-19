@@ -33,7 +33,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var DAY_STRING = ['上午', '下午'];
     var _moment = function _moment() {
         Utils.initMoment.apply(Utils, [this].concat(Array.prototype.slice.call(arguments)));
-        return this;
     };
 
     var Utils = {
@@ -65,7 +64,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 Utils.popUndefined(matched);
                 return new (Function.prototype.bind.apply(Date, [null].concat(_toConsumableArray(matched))))();
             }
-            return new Date();
+            var date = new Date(str);
+            if (date == "Invalid Date") {
+                console.error("Invalid date parse from \"" + str + "\"");
+                return null;
+            } else {
+                return date;
+            }
         },
         popUndefined: function popUndefined(arr) {
             if (arr.length > 0 && arr[arr.length - 1] == undefined) {
@@ -164,17 +169,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     _moment.prototype = {
         format: function format(str) {
             var m = this;
+
+            var v = this.isValid();
+            if (v !== true) return v;
+
             str = str || "l";
             var formatStr = FORMAT_LIST[str] || str;
             return Utils.format(m._date, formatStr);
         },
         toString: function toString() {
+            var v = this.isValid();
+            if (v !== true) return v;
             return this._date.toString();
         },
         distance: function distance(_m, type) {
+            var v = this.isValid();
+            if (v !== true) return v;
             var m = this;
             type = type || moment.DAY;
             _m = moment(_m);
+            v = _m.isValid();
+            if (v !== true) return v;
             switch (type) {
                 case moment.HOUR:
                     return Utils.getHours(m._date) - Utils.getHours(_m._date);
@@ -188,18 +203,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             return 0;
         },
         isLeapYear: function isLeapYear() {
+            var v = this.isValid();
+            if (v !== true) return v;
             return Utils.isLeapYear(this.year());
         },
         isThisYear: function isThisYear() {
+            var v = this.isValid();
+            if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
         isBefore: function isBefore() {
+            var v = this.isValid();
+            if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
         isAfter: function isAfter() {
+            var v = this.isValid();
+            if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
         month: function month(num) {
+            var v = this.isValid();
+            if (v !== true) return v;
             var m = this;
             if (num == undefined) {
                 return m._date.getMonth() + 1;
@@ -209,6 +234,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             return m;
         },
         add: function add(num, type) {
+            var v = this.isValid();
+            if (v !== true) return v;
             var m = this;
             num = parseInt(num);
             type = type || moment.DAY;
@@ -240,6 +267,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             return m;
         },
         endOf: function endOf(type) {
+            var v = this.isValid();
+            if (v !== true) return v;
             var m = this;
             type = type || moment.DAY;
             m.startOf(type);
@@ -252,6 +281,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             return m;
         },
         startOf: function startOf(type) {
+            var v = this.isValid();
+            if (v !== true) return v;
             var m = this;
             type = type || moment.DAY;
             switch (type) {
@@ -272,6 +303,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     break;
             }
             return m;
+        },
+        isValid: function isValid() {
+            return Utils.isDate(this._date) ? true : "Invalid Date";
         }
     };
 

@@ -1,4 +1,4 @@
-// var moment = require('./build/moment.min');
+// var moment = require('./build/moment');
 var moment = require('./moment');
 
 // moment({
@@ -49,5 +49,5 @@ var moment = require('./moment');
 
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
-
-console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));
+console.log(moment("sdfsd").startOf(moment.MONTH));
+// console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));

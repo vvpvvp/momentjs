@@ -28,7 +28,6 @@
     const DAY_STRING = ['上午', '下午'];
     let _moment = function() {
         Utils.initMoment(this, ...arguments);
-        return this;
     };
 
     let Utils = {
@@ -60,7 +59,13 @@
                 Utils.popUndefined(matched);
                 return new Date(...matched);
             }
-            return new Date();
+            let date = new Date(str);
+            if(date=="Invalid Date"){
+                console.error("Invalid date parse from \""+str+"\"");
+                return null;
+            }else{
+                return date;
+            }
         },
         popUndefined(arr) {
             if (arr.length > 0 && arr[arr.length - 1] == undefined) {
@@ -161,17 +166,27 @@
     _moment.prototype = {
         format(str) {
             let m = this;
+
+            let v = this.isValid();
+            if(v!==true)return v;
+
             str = str || "l";
             let formatStr = FORMAT_LIST[str] || str;
             return Utils.format(m._date, formatStr);
         },
         toString() {
+            let v = this.isValid();
+            if(v!==true)return v;
             return this._date.toString();
         },
         distance(_m, type) {
+            let v = this.isValid();
+            if(v!==true)return v;
             let m = this;
             type = type || moment.DAY;
             _m = moment(_m);
+            v = _m.isValid();
+            if(v!==true)return v;
             switch (type) {
                 case moment.HOUR:
                     return Utils.getHours(m._date) - Utils.getHours(_m._date);
@@ -185,18 +200,28 @@
             return 0;
         },
         isLeapYear() {
+            let v = this.isValid();
+            if(v!==true)return v;
             return Utils.isLeapYear(this.year());
         },
         isThisYear() {
+            let v = this.isValid();
+            if(v!==true)return v;
             return Utils.timestamp(this._date);
         },
         isBefore() {
+            let v = this.isValid();
+            if(v!==true)return v;
             return Utils.timestamp(this._date);
         },
         isAfter() {
+            let v = this.isValid();
+            if(v!==true)return v;
             return Utils.timestamp(this._date);
         },
         month(num) {
+            let v = this.isValid();
+            if(v!==true)return v;
             let m = this;
             if (num == undefined) {
                 return m._date.getMonth() + 1;
@@ -206,6 +231,8 @@
             return m;
         },
         add(num, type) {
+            let v = this.isValid();
+            if(v!==true)return v;
             let m = this;
             num = parseInt(num);
             type = type || moment.DAY;
@@ -237,6 +264,8 @@
             return m;
         },
         endOf(type) {
+            let v = this.isValid();
+            if(v!==true)return v;
             let m = this;
             type = type || moment.DAY;
             m.startOf(type);
@@ -249,6 +278,8 @@
             return m;
         },
         startOf(type) {
+            let v = this.isValid();
+            if(v!==true)return v;
             let m = this;
             type = type || moment.DAY;
             switch (type) {
@@ -269,6 +300,9 @@
                     break;
             }
             return m;
+        },
+        isValid(){
+            return Utils.isDate(this._date)?true:"Invalid Date";
         }
     };
 

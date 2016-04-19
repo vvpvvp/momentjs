@@ -1,6 +1,7 @@
 
 # momentjs
 超级简洁的日期处理Util，比moment.js小很多。
+![momentjs](https://img.shields.io/badge/momentjs-1.1.0-red.svg)
 
 ##安装
 ```
@@ -108,7 +109,7 @@ moment().isLeapYear() //是否为闰年 true
 ```
 ###distance
 
-`moment.distance(Moment|String|Number|Date|Array)`
+`moment.distance(Moment|String|Number|Date|Array,Moment.TYPE)`
 
 ```javascript
 moment("2012-09-21").distance("2012-09-20 23:59:59") 
@@ -126,7 +127,7 @@ moment("2012-09-21").distance("2011-09-20 23:59:59",moment.YEAR)
 ```
 ###add
 `add`方法，对日期做加减法，只有add函数，如果需要减法，则传递负数。
-`moment.add(Moment|String|Number|Date|Array)`
+`moment.add(Number,Moment.TYPE)`
 
 ```javascript
 moment("2012-10-03 23:59:59").add(1,moment.DAY).format("fff")
