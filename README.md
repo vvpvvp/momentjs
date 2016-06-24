@@ -1,7 +1,7 @@
 
 # momentjs
-超级简洁的日期处理Util，比moment.js小很多。
-![momentjs](https://img.shields.io/badge/momentjs-1.1.0-red.svg)
+超级简洁的日期处理Util，比moment.js小很多。  
+![momentjs](https://img.shields.io/badge/momentjs-1.1.6-red.svg)
 
 ##安装
 ```
@@ -106,6 +106,8 @@ moment().time(123131312321).format() //1973-11-26
 moment().date() //29
 moment().date(4).format() //2016-03-04
 moment().isLeapYear() //是否为闰年 true
+moment().toString()
+moment().toISOString()
 ```
 ###distance
 
@@ -162,6 +164,12 @@ moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("fff")
 
 moment("2012-10-03 23:59:59").startOf(moment.HOUR).format("fff")
 //2012年10月03日 15点00分00秒 星期三
+
+moment("2012-10-03 23:59:59").startOf(moment.WEEK).format("fff")
+//2012年09月30日 00点00分00秒 星期日
+
+moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff")
+//2012年10月01日 00点00分00秒 星期一
 ```
 
 
@@ -178,5 +186,11 @@ moment("2012-10-03 23:59:59").endOf(moment.YEAR).format()
 
 moment("2012-10-03 23:59:59").endOf(moment.MONTH).format()
 //2012-10-31
+
+moment("2012-10-03 23:59:59").endOf(moment.WEEK).format("fff")
+//2012年10月06日 23点59分59秒 星期六
+
+moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff")
+//2012年10月07日 23点59分59秒 星期日
 ```
 

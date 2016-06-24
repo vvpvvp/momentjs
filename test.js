@@ -39,7 +39,7 @@ var moment = require('./moment');
 // console.log(moment("2012-10-03 23:59:59").add(-1,moment.DAY).format("ff"));
 
 // console.log(moment("2012-10-03 23:59:59").add(26,moment.MONTH).format("ff"));
-// console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("ff"));
+// console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).formtimeat("ff"));
 // console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
 // console.log();
 // console.log(moment("2012-10-03 23:59:59").startOf(moment.DAY).format("ff"));
@@ -49,5 +49,10 @@ var moment = require('./moment');
 
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format());
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format());
-console.log(moment("sdfsd").startOf(moment.MONTH));
+// console.log(moment("sdfsd").startOf(moment.MONTH));
 // console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));
+let a = moment();
+a.endOf(moment.YEAR);
+// a.add(-a.day(),moment.DAY);
+console.log(moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff"))
+console.log(moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff"))

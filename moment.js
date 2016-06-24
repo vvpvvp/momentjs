@@ -21,6 +21,7 @@
     const _MINUTES = 1000 * 60;
     const _HOURS = 1000 * 60 * 60;
     const _DAYS = 1000 * 60 * 60 * 24;
+    const _WEEKS = _DAYS * 7;
     const _YEARS = _DAYS * 365;
     const MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
@@ -179,6 +180,11 @@
             if(v!==true)return v;
             return this._date.toString();
         },
+        toISOString() {
+            let v = this.isValid();
+            if(v!==true)return v;
+            return this._date.toISOString();
+        },
         distance(_m, type) {
             let v = this.isValid();
             if(v!==true)return v;
@@ -251,6 +257,9 @@
                 case moment.YEAR:
                     m.year(m.year() + num);
                     break;
+                case moment.WEEK:
+                    m.time(m.time() + (num * _WEEKS));
+                    break;
                 case moment.HOUR:
                     m.time(m.time() + (num * _HOURS));
                     break;
@@ -263,21 +272,21 @@
             }
             return m;
         },
-        endOf(type) {
+        endOf(type,set) {
             let v = this.isValid();
             if(v!==true)return v;
             let m = this;
             type = type || moment.DAY;
-            m.startOf(type);
+            m.startOf(type,set);
             m.add(1, type);
-            if (moment.DAY == type) {
+            // if (moment.DAY == type||moment.WEEK == type) {
                 m.add(-1, moment.SECOND);
-            } else {
-                m.add(-1, moment.DAY);
-            }
+            // } else {
+                // m.add(-1, moment.DAY);
+            // }
             return m;
         },
-        startOf(type) {
+        startOf(type,set) {
             let v = this.isValid();
             if(v!==true)return v;
             let m = this;
@@ -289,6 +298,12 @@
                 case moment.MONTH:
                     m.date(1);
                     m.startOf(moment.DAY);
+                    break;
+                case moment.WEEK:
+                    m.startOf(moment.DAY);
+                    set=set||moment.SUNDAY;
+                    let startDay = set==moment.SUNDAY?0:1;
+                    m.add(-m.day()+startDay,moment.DAY);
                     break;
                 case moment.YEAR:
                     m.month(0);
@@ -346,5 +361,9 @@
     moment.DAY = 5;
     moment.MONTH = 6;
     moment.YEAR = 7;
+    moment.WEEK = 8;
+
+    moment.MONDAY = 1;
+    moment.SUNDAY = 2;
     return moment;
 }));

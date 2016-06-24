@@ -26,6 +26,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var _MINUTES = 1000 * 60;
     var _HOURS = 1000 * 60 * 60;
     var _DAYS = 1000 * 60 * 60 * 24;
+    var _WEEKS = _DAYS * 7;
     var _YEARS = _DAYS * 365;
     var MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
@@ -182,6 +183,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             if (v !== true) return v;
             return this._date.toString();
         },
+        toISOString: function toISOString() {
+            var v = this.isValid();
+            if (v !== true) return v;
+            return this._date.toISOString();
+        },
         distance: function distance(_m, type) {
             var v = this.isValid();
             if (v !== true) return v;
@@ -254,6 +260,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 case moment.YEAR:
                     m.year(m.year() + num);
                     break;
+                case moment.WEEK:
+                    m.time(m.time() + num * _WEEKS);
+                    break;
                 case moment.HOUR:
                     m.time(m.time() + num * _HOURS);
                     break;
@@ -266,21 +275,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }
             return m;
         },
-        endOf: function endOf(type) {
+        endOf: function endOf(type, set) {
             var v = this.isValid();
             if (v !== true) return v;
             var m = this;
             type = type || moment.DAY;
-            m.startOf(type);
+            m.startOf(type, set);
             m.add(1, type);
-            if (moment.DAY == type) {
-                m.add(-1, moment.SECOND);
-            } else {
-                m.add(-1, moment.DAY);
-            }
+            // if (moment.DAY == type||moment.WEEK == type) {
+            m.add(-1, moment.SECOND);
+            // } else {
+            // m.add(-1, moment.DAY);
+            // }
             return m;
         },
-        startOf: function startOf(type) {
+        startOf: function startOf(type, set) {
             var v = this.isValid();
             if (v !== true) return v;
             var m = this;
@@ -292,6 +301,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 case moment.MONTH:
                     m.date(1);
                     m.startOf(moment.DAY);
+                    break;
+                case moment.WEEK:
+                    m.startOf(moment.DAY);
+                    set = set || moment.SUNDAY;
+                    var startDay = set == moment.SUNDAY ? 0 : 1;
+                    m.add(-m.day() + startDay, moment.DAY);
                     break;
                 case moment.YEAR:
                     m.month(0);
@@ -349,5 +364,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     moment.DAY = 5;
     moment.MONTH = 6;
     moment.YEAR = 7;
+    moment.WEEK = 8;
+
+    moment.MONDAY = 1;
+    moment.SUNDAY = 2;
     return moment;
 });
