@@ -309,12 +309,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     m.add(-m.day() + startDay, moment.DAY);
                     break;
                 case moment.YEAR:
-                    m.month(0);
+                    m.month(1);
                     m.date(1);
                     m.startOf(moment.DAY);
                     break;
                 case moment.HOUR:
-                    m.time(Math.floor(m.time() / _HOURS) * _HOURS + MSE);
+                    m.time(Math.floor(m.time() / _HOURS) * _HOURS);
                     break;
             }
             return m;
