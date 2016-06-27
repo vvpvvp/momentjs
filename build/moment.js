@@ -208,6 +208,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }
             return 0;
         },
+        getWeekOfYear: function getWeekOfYear(weekStart) {
+            var diff = 0;
+            if (weekStart && weekStart == moment.MONDAY) {
+                diff = 1;
+            }
+            var _date = this._date;
+            var year = _date.getFullYear();
+            var firstDay = new Date(year, 0, 1);
+            var firstWeekDays = 7 - firstDay.getDay() + diff;
+            var dayOfYear = (new Date(year, _date.getMonth(), _date.getDate()) - firstDay) / (24 * 3600 * 1000) + 1;
+            return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
+        },
+        getWeekOfMonth: function getWeekOfMonth(weekStart) {
+            var diff = 0;
+            if (weekStart && weekStart == moment.MONDAY) {
+                diff = 1;
+            }
+            var dayOfWeek = this.day();
+            var day = this.date();
+            return Math.ceil((day - dayOfWeek - 1) / 7) + (dayOfWeek >= weekStart ? 1 : 0);
+        },
         isLeapYear: function isLeapYear() {
             var v = this.isValid();
             if (v !== true) return v;

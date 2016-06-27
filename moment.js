@@ -205,6 +205,27 @@
             }
             return 0;
         },
+        getWeekOfYear(weekStart){
+            let diff = 0;
+            if(weekStart&&weekStart==moment.MONDAY){
+                diff=1;
+            }
+            let _date = this._date;
+            let year = _date.getFullYear();  
+            let firstDay = new Date(year, 0, 1);  
+            let firstWeekDays = 7 - firstDay.getDay() + diff;  
+            let dayOfYear = (((new Date(year, _date.getMonth(), _date.getDate())) - firstDay) / (24 * 3600 * 1000)) + 1; 
+            return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;  
+        },
+        getWeekOfMonth(weekStart) {  
+            let diff = 0;
+            if(weekStart&&weekStart==moment.MONDAY){
+                diff=1;
+            }
+            var dayOfWeek = this.day();  
+            var day = this.date();  
+            return Math.ceil((day - dayOfWeek - 1) / 7) + ((dayOfWeek >= weekStart) ? 1 : 0);  
+        },
         isLeapYear() {
             let v = this.isValid();
             if(v!==true)return v;

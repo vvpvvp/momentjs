@@ -1,4 +1,4 @@
-var moment = require('./build/moment');
+// var moment = require('./build/moment');
 var moment = require('./moment');
 
 moment({
@@ -42,14 +42,15 @@ moment({
 // console.log(moment("2012-10-03 23:59:59").add(-1,moment.YEAR).format("ff"));
 // console.log(moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff"));
 
-console.log(moment().startOf(moment.DAY).format("ff"));
-console.log(moment("2012-10-03 23:59:59").startOf(moment.YEAR).format("ff"));
-console.log(moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("ff"));
-console.log(moment().startOf(moment.HOUR).format("ff"));
+// console.log(moment().startOf(moment.DAY).format("ff"));
+// console.log(moment("2012-10-03 23:59:59").startOf(moment.YEAR).format("ff"));
+// console.log(moment("2012-10-03 23:59:59").startOf(moment.MONTH).format("ff"));
+// console.log(moment().startOf(moment.HOUR).format("ff"));
 
-console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format("fff"));
-console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format("fff"));
-// console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));
+// console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format("fff"));
+// console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format("fff"));
+// // console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));
 
-console.log(moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff"))
-console.log(moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff"))
+// console.log(moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff"))
+// console.log(moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff"))
+console.log(moment().getWeekOfMonth(moment.MONDAY))

@@ -194,3 +194,16 @@ moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff")
 //2012年10月07日 23点59分59秒 星期日
 ```
 
+###星期数
+```javascript
+//获取当月的星期数
+//moment.SUNDAY 星期日开始
+//默认星期日
+moment().getWeekOfMonth()
+moment().getWeekOfMonth(moment.MONDAY)
+
+//获取当年的星期数
+//moment.MONDAY 星期一开始
+moment().getWeekOfYear(moment.MONDAY)
+```
+
