@@ -38,7 +38,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     var Utils = {
         initMoment: function initMoment(moment_obj, arg_1, type) {
-            var _date = new Date();
+            var _date = new Date(),
+                date_bak = _date;
             if (arg_1 != undefined) {
                 if (Utils.isNumber(arg_1)) {
                     if (arg_1 < 9999999999) arg_1 = arg_1 * 1000;
@@ -55,6 +56,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
             }
             moment_obj._date = _date;
+            if (date_bak === _date && moment_obj.timeDelay != 0) {
+                moment_obj.add(moment_obj.timeDelay, moment.TIME);
+            }
         },
         parse: function parse(str) {
             var aspNetJsonRegex = /^(\d{4})\-?(\d{2})\-?(\d{2})\s?\:?(\d{2})?\:?(\d{2})?\:?(\d{2})?$/i;
@@ -168,6 +172,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
 
     _moment.prototype = {
+        timeDelay: 0,
         format: function format(str) {
             var m = this;
 
@@ -293,6 +298,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 case moment.SECOND:
                     m.time(m.time() + num * _SECONDS);
                     break;
+                case moment.TIME:
+                    m.time(m.time() + num);
+                    break;
             }
             return m;
         },
@@ -368,14 +376,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             if (param.formatString && Utils.isObject(param.formatString)) {
                 Utils.extend(FORMAT_LIST, param.formatString);
             }
+            if (param.now) {
+                _moment.prototype.timeDelay = moment(param.now).time() - moment().time();
+            }
         } else {
             return new _moment(param);
         }
     };
 
-    moment.prototype.config = function (param) {
+    moment.config = function (param) {
         if (param.formatString && Utils.isObject(param.formatString)) {
             Utils.extend(FORMAT_LIST, param.formatString);
+        }
+        if (param.now) {
+            _moment.prototype.timeDelay = moment(param.now).time() - moment().time();
         }
     };
 
@@ -386,6 +400,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     moment.MONTH = 6;
     moment.YEAR = 7;
     moment.WEEK = 8;
+    moment.TIME = 9;
 
     moment.MONDAY = 1;
     moment.SUNDAY = 2;
