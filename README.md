@@ -81,11 +81,14 @@ moment().format("YYYY") // 2016
 ####定制简洁格式
 
 ```javascript
-moment({
+moment.config({
     formatString: {
         "r": "YYYY"
-    }
+    },
+    now:"2016-07-11T18:42:34.453+08:00"
 }
+
+//now参数可以设置前端与后端的时间差，这样前端也可以使用moment()获取当前时间。
 
 moment().format("r") // 2016
 

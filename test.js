@@ -1,11 +1,13 @@
 // var moment = require('./build/moment');
 var moment = require('./moment');
-
-moment({
+moment.config({
     formatString: {
         "r": "YYYY"
-    }
+    },
+    now:"2016-07-11T18:42:34.453+08:00"
 });
+
+console.log(moment());
 
 // console.log(moment().toString());
 // console.log(moment().format());
@@ -53,4 +55,5 @@ moment({
 
 // console.log(moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff"))
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff"))
-console.log(moment().getWeekOfMonth(moment.MONDAY))
+// console.log(moment().getWeekOfMonth(moment.MONDAY))
+// console.log(moment().format("f"))
