@@ -1,6 +1,6 @@
 {
   "name": "momentjs",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "javascript 日期处理",
   "main": "build/moment.js",
   "repository": {
@@ -24,7 +24,7 @@
     "url": "https://github.com/vvpvvp/momentjs/issues"
   },
   "scripts": {
-    "build": "babel --presets=es2015 ./moment.js -d build",
+    "build": "babel ./moment.js -d build",
     "min": "babel build/moment.js --minified --no-babelrc -o build/moment.min.js"
   },
   "homepage": "https://github.com/vvpvvp/momentjs#readme",

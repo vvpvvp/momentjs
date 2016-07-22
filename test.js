@@ -1,13 +1,16 @@
-// var moment = require('./build/moment');
-var moment = require('./moment');
-moment.config({
-    formatString: {
-        "r": "YYYY"
-    },
-    now:"2016-07-11T18:42:34.453+08:00"
-});
+var moment = require('./build/moment');
+// var moment = require('./moment');
+// moment.config({
+//     formatString: {
+//         "r": "YYYY"
+//     },
+//     now:"2016-07-11T18:42:34.453+08:00"
+// });
 
-console.log(moment());
+// console.log(moment());
+
+console.log(moment().endOf(moment.MONTH).format("ff"))
+// console.log(moment('2016-07-23').distance(moment(),moment.DAY))
 
 // console.log(moment().toString());
 // console.log(moment().format());
@@ -18,7 +21,7 @@ console.log(moment());
 // console.log(moment().format("kkk"));
 // console.log(moment().format("f"));
 // console.log(moment().format("ff"));
-// console.log(moment().format("fff"));
+// console.log(moment().format("fff")); 
 // console.log(moment().format("n"));
 // console.log(moment().format("nn"));
 // console.log(moment().format("r"));
@@ -51,7 +54,9 @@ console.log(moment());
 
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format("fff"));
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format("fff"));
-// // console.log(moment("2016-09-21").distance(moment.NOW,moment.DAY));
+// console.log(moment("2016-07-22 ").distance(moment.NOW,moment.DAY));
+// console.log(moment())
+// console.log(moment('2016-07-22'))
 
 // console.log(moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff"))
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff"))

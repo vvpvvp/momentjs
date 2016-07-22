@@ -1,14 +1,14 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _bind = Function.prototype.bind;
+var _slice = Array.prototype.slice;
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 (function (global, factory) {
-    (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
 })(undefined, function () {
     "use strict";
-
     var FORMAT_LIST = {
         "l": "YYYY-MM-DD",
         "ll": "YYYY年MM月DD日",
@@ -33,7 +33,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
     var DAY_STRING = ['上午', '下午'];
     var _moment = function _moment() {
-        Utils.initMoment.apply(Utils, [this].concat(Array.prototype.slice.call(arguments)));
+        Utils.initMoment.apply(Utils, [this].concat(_slice.call(arguments)));
     };
 
     var Utils = {
@@ -46,13 +46,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     _date.setTime(arg_1);
                 } else if (Utils.isArray(arg_1)) {
                     Utils.padMonth(arg_1);
-                    _date = new (Function.prototype.bind.apply(Date, [null].concat(_toConsumableArray(arg_1))))();
+                    _date = new (_bind.apply(Date, [null].concat(_toConsumableArray(arg_1))))();
                 } else if (Utils.isDate(arg_1)) {
                     _date = arg_1;
                 } else if (Utils.isString(arg_1)) {
                     _date = Utils.parse(arg_1);
                 } else if (arg_1 instanceof _moment) {
-                    moment_obj = arg_1;
+                    return arg_1;
                 }
             }
             moment_obj._date = _date;
@@ -67,7 +67,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 matched.shift();
                 Utils.padMonth(matched);
                 Utils.popUndefined(matched);
-                return new (Function.prototype.bind.apply(Date, [null].concat(_toConsumableArray(matched))))();
+                return new (_bind.apply(Date, [null].concat(_toConsumableArray(matched))))();
             }
             var date = new Date(str);
             if (date == "Invalid Date") {
@@ -325,7 +325,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             type = type || moment.DAY;
             switch (type) {
                 case moment.DAY:
-                    m.time(Math.floor(m.time() / _DAYS) * _DAYS + MSE);
+                    m.milliseconds(0);
+                    m.seconds(0);
+                    m.minutes(0);
+                    m.hours(0);
                     break;
                 case moment.MONTH:
                     m.date(1);
@@ -371,7 +374,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
 
     var moment = function moment(param) {
-        if (Utils.isObject(param)) {
+        if (param instanceof _moment) {
+            return param;
+        } else if (Utils.isObject(param)) {
             //config
             if (param.formatString && Utils.isObject(param.formatString)) {
                 Utils.extend(FORMAT_LIST, param.formatString);

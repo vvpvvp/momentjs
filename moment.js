@@ -46,7 +46,7 @@
                 } else if (Utils.isString(arg_1)) {
                     _date = Utils.parse(arg_1);
                 } else if (arg_1 instanceof _moment) {
-                    moment_obj = arg_1;
+                    return arg_1;
                 }
             }
             moment_obj._date = _date;
@@ -321,7 +321,10 @@
             type = type || moment.DAY;
             switch (type) {
                 case moment.DAY:
-                    m.time(Math.floor((m.time()) / _DAYS) * _DAYS + MSE);
+                    m.milliseconds(0);
+                    m.seconds(0);
+                    m.minutes(0);
+                    m.hours(0);
                     break;
                 case moment.MONTH:
                     m.date(1);
@@ -367,7 +370,9 @@
     }
 
     let moment = function(param) {
-        if (Utils.isObject(param)) {
+        if(param instanceof _moment){
+            return param;
+        }else if (Utils.isObject(param)) {
             //config
             if (param.formatString && Utils.isObject(param.formatString)) {
                 Utils.extend(FORMAT_LIST, param.formatString);
