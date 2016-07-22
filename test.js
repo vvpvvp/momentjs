@@ -9,7 +9,7 @@ var moment = require('./build/moment');
 
 // console.log(moment());
 
-console.log(moment().endOf(moment.MONTH).format("ff"))
+console.log(moment("2016-07-03").endOf(moment.MONTH).format("ff"))
 // console.log(moment('2016-07-23').distance(moment(),moment.DAY))
 
 // console.log(moment().toString());

@@ -1,7 +1,7 @@
 
 # momentjs
 超级简洁的日期处理Util，比moment.js小很多。  
-![momentjs](https://img.shields.io/badge/momentjs-1.1.6-red.svg)
+![momentjs](https://img.shields.io/badge/momentjs-1.1.14-red.svg)
 
 ##安装
 ```
@@ -152,7 +152,7 @@ moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff")
 ```
 
 ###startOf
-`startOf`方法，对日期做一定规则的减法。  
+`startOf`方法，做一定规则的时间处理。  
 `moment.startOf(Moment.TYPE)`
 
 ```javascript
@@ -177,7 +177,7 @@ moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff")
 
 
 ###endOf
-`endOf`方法，对日期做一定规则的加法。  
+`endOf`方法，做一定规则的时间处理。  
 `moment.endOf(Moment.TYPE)`
 
 ```javascript
