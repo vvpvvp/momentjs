@@ -2,7 +2,7 @@
 	$(function(){
 		var m = moment();
 		var code1 = 
-			"moment().format('MM DD YYYY, h:mm:ss q');     // "+m.format('YYYY MM DD, h:mm:ss q')+"\n"+
+			"moment().format('YYYY/MM/DD, h:mm:ss q');     // "+m.format('YYYY/MM/DD, h:mm:ss q')+"\n"+
 			"moment().format('kk');                        // "+m.format('kk')+"\n"+
 			"moment().format('星期w');                      // "+m.format('星期w')+"\n"+
 			"moment().format('M月 D日 YY');                 // "+m.format('M月 D日 YY')+"\n"+
