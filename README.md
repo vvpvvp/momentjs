@@ -4,11 +4,11 @@
 超级简洁的日期处理Util，比moment.js小很多。  
 ![momentjs](https://img.shields.io/badge/momentjs-1.1.15-red.svg)
 
-##官方网站
+## 官方网站
 
 [http://momentjs.ch-un.com](http://momentjs.ch-un.com)
 
-##安装
+## 安装
 ```
 npm install momentjs
 ```
@@ -16,8 +16,8 @@ npm install momentjs
 ```
 npm install --save momentjs
 ```
-##文档
-###初始化数据
+## 文档
+### 初始化数据
 
 初始化的时候，对月份做了修补。
 
@@ -37,7 +37,7 @@ moment("20141203").format("f") //2014-12-03 00:00:00
 moment("201412031223").format("f") //2014-12-03 12:23:00
 ```
 
-###format
+### format
 格式化日期转换标准
 - YYYY/yyyy:年份
 - M:月份
@@ -53,7 +53,7 @@ moment("201412031223").format("f") //2014-12-03 12:23:00
 - w:星期，返回中文：['日', '一', '二', '三', '四', '五', '六']
 - q:上下午，返回中文：['上午', '下午']
 
-####内置简洁的格式化
+#### 内置简洁的格式化
 - "l": "YYYY-MM-DD",
 - "ll": "YYYY年MM月DD日",
 - "k": "YYYY-MM-DD hh:mm",
@@ -82,7 +82,7 @@ moment().format("n") // 03-29
 moment().format("nn") // 03月29日
 moment().format("YYYY") // 2016
 ```
-####定制简洁格式
+#### 定制简洁格式
 
 ```javascript
 moment.config({
@@ -98,7 +98,7 @@ moment().format("r") // 2016
 
 ```
 
-###获取数值函数
+### 获取数值函数
 `month()`方法，对月份做了修补。
 
 ```javascript
@@ -116,7 +116,7 @@ moment().isLeapYear() //是否为闰年 true
 moment().toString()
 moment().toISOString()
 ```
-###distance
+### distance
 
 `moment.distance(Moment|String|Number|Date|Array,Moment.TYPE)`
 
@@ -134,7 +134,7 @@ moment("2012-09-21").distance("2011-09-20 23:59:59",moment.YEAR)
 //两个日期间相隔年数 1
 
 ```
-###add
+### add
 `add`方法，对日期做加减法，只有add函数，如果需要减法，则传递负数。
 `moment.add(Number,Moment.TYPE)`
 
@@ -155,7 +155,7 @@ moment("2012-10-03 23:59:59").add(1,moment.MINUTE).format("ff")
 //2012年10月04日 00点00分59秒
 ```
 
-###startOf
+### startOf
 `startOf`方法，做一定规则的时间处理。  
 `moment.startOf(Moment.TYPE)`
 
@@ -180,7 +180,7 @@ moment("2012-10-03 23:59:59").startOf(moment.WEEK,moment.MONDAY).format("fff")
 ```
 
 
-###endOf
+### endOf
 `endOf`方法，做一定规则的时间处理。  
 `moment.endOf(Moment.TYPE)`
 
@@ -201,7 +201,7 @@ moment("2012-10-03 23:59:59").endOf(moment.WEEK,moment.MONDAY).format("fff")
 //2012年10月07日 23点59分59秒 星期日
 ```
 
-###星期数
+### 星期数
 ```javascript
 //获取当月的星期数
 //moment.SUNDAY 星期日开始
