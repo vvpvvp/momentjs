@@ -7,7 +7,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
-})(undefined, function () {
+})(window, function () {
     "use strict";
     var FORMAT_LIST = {
         "l": "YYYY-MM-DD",
