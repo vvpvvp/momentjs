@@ -17,11 +17,12 @@
             let titles = $("h1,h2,h3,h4",_right);
             titles.each(function(i,n){
             	let _n = $(n);
+                  n.id = _n.text();
             	let li = $("<li class='"+n.tagName+"'>"+_n.text()+"</li>");
             	li.on("click",function(argument) {
             		$(".selected",lis).removeClass("selected");
             		li.addClass("selected");
-            		window.location.hash = "#" + _n.text();
+            		window.location.hash = "#doc_" + _n.text();
             		$("body").animate({
             			"scrollTop":(_n.position().top-60)
             		})
