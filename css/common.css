@@ -33,13 +33,13 @@ header {
     background: #FFF;
 }
 
-header>img {
+header>a>img {
     width: 40px;
     margin: 10px 5px 0px 20px;
     float: left;
 }
 
-header>h1 {
+header>a>h1 {
     font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     display: inline-block;
     font-weight: 100;
