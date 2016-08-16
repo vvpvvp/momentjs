@@ -16,6 +16,11 @@ npm install momentjs
 ```
 npm install --save momentjs
 ```
+
+## NPM地址
+
+[https://www.npmjs.com/package/momentjs](https://www.npmjs.com/package/momentjs)
+
 ## 文档
 ### 初始化数据
 
