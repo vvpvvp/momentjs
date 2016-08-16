@@ -23,7 +23,7 @@
             		$(".selected",lis).removeClass("selected");
             		li.addClass("selected");
             		window.location.hash = "#doc_" + _n.text();
-            		$("body").animate({
+            		$("html,body").animate({
             			"scrollTop":(_n.position().top-60)
             		})
             	});
