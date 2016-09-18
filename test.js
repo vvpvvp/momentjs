@@ -1,5 +1,5 @@
-var moment = require('./build/moment');
-// var moment = require('./moment');
+// var moment = require('./build/moment');
+var moment = require('./moment');
 // moment.config({
 //     formatString: {
 //         "r": "YYYY"
@@ -9,7 +9,7 @@ var moment = require('./build/moment');
 
 // console.log(moment());
 
-console.log(moment("2016-07-03").endOf(moment.MONTH).format("ff"))
+console.log(moment().startOf(moment.WEEK,moment.SUNDAY).format("ff"))
 // console.log(moment('2016-07-23').distance(moment(),moment.DAY))
 
 // console.log(moment().toString());

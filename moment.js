@@ -334,6 +334,9 @@
                     m.startOf(moment.DAY);
                     set=set||moment.SUNDAY;
                     let startDay = set==moment.SUNDAY?0:1;
+                    if(m.day()==0&&startDay==1){
+                        startDay = -6;
+                    }
                     m.add(-m.day()+startDay,moment.DAY);
                     break;
                 case moment.YEAR:

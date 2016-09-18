@@ -27,3 +27,11 @@
   * fixed bug #1 endOf: wrong result for moment.MONTH and 2016-07-31
 
 ==================
+
+
+1.1.13 / 2016-09-18
+==================
+
+  * fixed bug : wrong result for moment.MONDAY with momont.Week handle
+
+==================

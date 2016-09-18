@@ -1,15 +1,9 @@
-'use strict';
-
-var _bind = Function.prototype.bind;
-var _slice = Array.prototype.slice;
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
-})(window, function () {
+})(this, function () {
     "use strict";
-    var FORMAT_LIST = {
+
+    const FORMAT_LIST = {
         "l": "YYYY-MM-DD",
         "ll": "YYYY年MM月DD日",
         "k": "YYYY-MM-DD hh:mm",
@@ -22,23 +16,23 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         "nn": "MM月DD日"
     };
 
-    var _SECONDS = 1000;
-    var _MINUTES = 1000 * 60;
-    var _HOURS = 1000 * 60 * 60;
-    var _DAYS = 1000 * 60 * 60 * 24;
-    var _WEEKS = _DAYS * 7;
-    var _YEARS = _DAYS * 365;
-    var MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
+    const _SECONDS = 1000;
+    const _MINUTES = 1000 * 60;
+    const _HOURS = 1000 * 60 * 60;
+    const _DAYS = 1000 * 60 * 60 * 24;
+    const _WEEKS = _DAYS * 7;
+    const _YEARS = _DAYS * 365;
+    const MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
-    var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
-    var DAY_STRING = ['上午', '下午'];
-    var _moment = function _moment() {
-        Utils.initMoment.apply(Utils, [this].concat(_slice.call(arguments)));
+    const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+    const DAY_STRING = ['上午', '下午'];
+    let _moment = function () {
+        Utils.initMoment(this, ...arguments);
     };
 
-    var Utils = {
-        initMoment: function initMoment(moment_obj, arg_1, type) {
-            var _date = new Date(),
+    let Utils = {
+        initMoment(moment_obj, arg_1, type) {
+            let _date = new Date(),
                 date_bak = _date;
             if (arg_1 != undefined) {
                 if (Utils.isNumber(arg_1)) {
@@ -46,7 +40,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     _date.setTime(arg_1);
                 } else if (Utils.isArray(arg_1)) {
                     Utils.padMonth(arg_1);
-                    _date = new (_bind.apply(Date, [null].concat(_toConsumableArray(arg_1))))();
+                    _date = new Date(...arg_1);
                 } else if (Utils.isDate(arg_1)) {
                     _date = arg_1;
                 } else if (Utils.isString(arg_1)) {
@@ -60,16 +54,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 moment_obj.add(moment_obj.timeDelay, moment.TIME);
             }
         },
-        parse: function parse(str) {
-            var aspNetJsonRegex = /^(\d{4})\-?(\d{2})\-?(\d{2})\s?\:?(\d{2})?\:?(\d{2})?\:?(\d{2})?$/i;
+        parse(str) {
+            let aspNetJsonRegex = /^(\d{4})\-?(\d{2})\-?(\d{2})\s?\:?(\d{2})?\:?(\d{2})?\:?(\d{2})?$/i;
             var matched = aspNetJsonRegex.exec(str);
             if (matched !== null) {
                 matched.shift();
                 Utils.padMonth(matched);
                 Utils.popUndefined(matched);
-                return new (_bind.apply(Date, [null].concat(_toConsumableArray(matched))))();
+                return new Date(...matched);
             }
-            var date = new Date(str);
+            let date = new Date(str);
             if (date == "Invalid Date") {
                 console.error("Invalid date parse from \"" + str + "\"");
                 return null;
@@ -77,22 +71,22 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 return date;
             }
         },
-        popUndefined: function popUndefined(arr) {
+        popUndefined(arr) {
             if (arr.length > 0 && arr[arr.length - 1] == undefined) {
                 arr.pop();
                 return Utils.popUndefined(arr);
             }
             return arr;
         },
-        padMonth: function padMonth(arr) {
+        padMonth(arr) {
             //自动补充月份
             if (arr.length > 1 && arr[1] > 0) arr[1] -= 1;
         },
-        isLeapYear: function isLeapYear(year) {
+        isLeapYear(year) {
             return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
         },
-        format: function format(date, formatStr) {
-            var str = formatStr;
+        format(date, formatStr) {
+            let str = formatStr;
             str = str.replace(/yyyy|YYYY/, date.getFullYear());
             str = str.replace(/yy|YY/, date.getYear() % 100 > 8 ? (date.getYear() % 100).toString() : '0' + date.getYear() % 100);
             str = str.replace(/MM/, date.getMonth() > 8 ? (date.getMonth() + 1).toString() : '0' + (date.getMonth() + 1));
@@ -109,34 +103,34 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             str = str.replace(/q|Q/g, date.getHours() > 12 ? DAY_STRING[1] : DAY_STRING[0]);
             return str;
         },
-        timestamp: function timestamp(date) {
+        timestamp(date) {
             return Math.floor(date.getTime() / 1000);
         },
-        getDays: function getDays(date) {
+        getDays(date) {
             return Math.floor((date.getTime() - MSE) / _DAYS);
         },
-        getHours: function getHours(date) {
+        getHours(date) {
             return Math.floor((date.getTime() - MSE) / _HOURS);
         },
-        getMonths: function getMonths(date) {
+        getMonths(date) {
             return date.getYear() * 12 + date.getMonth() + 1;
         },
-        isObject: function isObject(input) {
+        isObject(input) {
             return Object.prototype.toString.call(input) === '[object Object]';
         },
-        isArray: function isArray(input) {
+        isArray(input) {
             return input instanceof Array || Object.prototype.toString.call(input) === '[object Array]';
         },
-        isDate: function isDate(input) {
+        isDate(input) {
             return input instanceof Date || Object.prototype.toString.call(input) === '[object Date]';
         },
-        isNumber: function isNumber(input) {
+        isNumber(input) {
             return input instanceof Number || Object.prototype.toString.call(input) === '[object Number]';
         },
-        isString: function isString(input) {
+        isString(input) {
             return input instanceof String || Object.prototype.toString.call(input) === '[object String]';
         },
-        extend: function extend(a, b) {
+        extend(a, b) {
             for (var i in b) {
                 if (hasOwnProp(b, i)) {
                     a[i] = b[i];
@@ -153,7 +147,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             return a;
         },
-        makeGetSet: function makeGetSet(unit) {
+        makeGetSet(unit) {
             return function (value) {
                 if (value != undefined) {
                     // if(unit=="Month")value = value>0?(value-1):0;
@@ -173,30 +167,30 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     _moment.prototype = {
         timeDelay: 0,
-        format: function format(str) {
-            var m = this;
+        format(str) {
+            let m = this;
 
-            var v = this.isValid();
+            let v = this.isValid();
             if (v !== true) return v;
 
             str = str || "l";
-            var formatStr = FORMAT_LIST[str] || str;
+            let formatStr = FORMAT_LIST[str] || str;
             return Utils.format(m._date, formatStr);
         },
-        toString: function toString() {
-            var v = this.isValid();
+        toString() {
+            let v = this.isValid();
             if (v !== true) return v;
             return this._date.toString();
         },
-        toISOString: function toISOString() {
-            var v = this.isValid();
+        toISOString() {
+            let v = this.isValid();
             if (v !== true) return v;
             return this._date.toISOString();
         },
-        distance: function distance(_m, type) {
-            var v = this.isValid();
+        distance(_m, type) {
+            let v = this.isValid();
             if (v !== true) return v;
-            var m = this;
+            let m = this;
             type = type || moment.DAY;
             _m = moment(_m);
             v = _m.isValid();
@@ -213,20 +207,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }
             return 0;
         },
-        getWeekOfYear: function getWeekOfYear(weekStart) {
-            var diff = 0;
+        getWeekOfYear(weekStart) {
+            let diff = 0;
             if (weekStart && weekStart == moment.MONDAY) {
                 diff = 1;
             }
-            var _date = this._date;
-            var year = _date.getFullYear();
-            var firstDay = new Date(year, 0, 1);
-            var firstWeekDays = 7 - firstDay.getDay() + diff;
-            var dayOfYear = (new Date(year, _date.getMonth(), _date.getDate()) - firstDay) / (24 * 3600 * 1000) + 1;
+            let _date = this._date;
+            let year = _date.getFullYear();
+            let firstDay = new Date(year, 0, 1);
+            let firstWeekDays = 7 - firstDay.getDay() + diff;
+            let dayOfYear = (new Date(year, _date.getMonth(), _date.getDate()) - firstDay) / (24 * 3600 * 1000) + 1;
             return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
         },
-        getWeekOfMonth: function getWeekOfMonth(weekStart) {
-            var diff = 0;
+        getWeekOfMonth(weekStart) {
+            let diff = 0;
             if (weekStart && weekStart == moment.MONDAY) {
                 diff = 1;
             }
@@ -234,30 +228,30 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var day = this.date();
             return Math.ceil((day - dayOfWeek - 1) / 7) + (dayOfWeek >= weekStart ? 1 : 0);
         },
-        isLeapYear: function isLeapYear() {
-            var v = this.isValid();
+        isLeapYear() {
+            let v = this.isValid();
             if (v !== true) return v;
             return Utils.isLeapYear(this.year());
         },
-        isThisYear: function isThisYear() {
-            var v = this.isValid();
+        isThisYear() {
+            let v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        isBefore: function isBefore() {
-            var v = this.isValid();
+        isBefore() {
+            let v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        isAfter: function isAfter() {
-            var v = this.isValid();
+        isAfter() {
+            let v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        month: function month(num) {
-            var v = this.isValid();
+        month(num) {
+            let v = this.isValid();
             if (v !== true) return v;
-            var m = this;
+            let m = this;
             if (num == undefined) {
                 return m._date.getMonth() + 1;
             }
@@ -265,10 +259,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             num = m._date.setMonth(num - 1);
             return m;
         },
-        add: function add(num, type) {
-            var v = this.isValid();
+        add(num, type) {
+            let v = this.isValid();
             if (v !== true) return v;
-            var m = this;
+            let m = this;
             num = parseInt(num);
             type = type || moment.DAY;
 
@@ -277,8 +271,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     m.time(m.time() + num * _DAYS);
                     break;
                 case moment.MONTH:
-                    var month_add = m.month() + num;
-                    var year_add = Math.floor(month_add / 12);
+                    let month_add = m.month() + num;
+                    let year_add = Math.floor(month_add / 12);
                     month_add = month_add % 12;
                     m.add(year_add, moment.YEAR);
                     m.month(month_add);
@@ -304,10 +298,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }
             return m;
         },
-        endOf: function endOf(type, set) {
-            var v = this.isValid();
+        endOf(type, set) {
+            let v = this.isValid();
             if (v !== true) return v;
-            var m = this;
+            let m = this;
             type = type || moment.DAY;
             m.startOf(type, set);
             m.add(1, type);
@@ -318,10 +312,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             // }
             return m;
         },
-        startOf: function startOf(type, set) {
-            var v = this.isValid();
+        startOf(type, set) {
+            let v = this.isValid();
             if (v !== true) return v;
-            var m = this;
+            let m = this;
             type = type || moment.DAY;
             switch (type) {
                 case moment.DAY:
@@ -337,7 +331,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 case moment.WEEK:
                     m.startOf(moment.DAY);
                     set = set || moment.SUNDAY;
-                    var startDay = set == moment.SUNDAY ? 0 : 1;
+                    let startDay = set == moment.SUNDAY ? 0 : 1;
+                    if (m.day() == 0 && startDay == 1) {
+                        startDay = -6;
+                    }
                     m.add(-m.day() + startDay, moment.DAY);
                     break;
                 case moment.YEAR:
@@ -351,14 +348,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }
             return m;
         },
-        isValid: function isValid() {
+        isValid() {
             return Utils.isDate(this._date) ? true : "Invalid Date";
         }
     };
 
-    var momentPrototype__proto = _moment.prototype;
+    let momentPrototype__proto = _moment.prototype;
 
-    var methods = {
+    const methods = {
         "year": "FullYear",
         "day": "Day",
         "date": "Date",
@@ -369,11 +366,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         "time": "Time"
     };
 
-    for (var unit in methods) {
+    for (let unit in methods) {
         momentPrototype__proto[unit] = Utils.makeGetSet(methods[unit]);
     }
 
-    var moment = function moment(param) {
+    let moment = function (param) {
         if (param instanceof _moment) {
             return param;
         } else if (Utils.isObject(param)) {
