@@ -1,9 +1,15 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
-})(this, function () {
+    (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : global.moment = factory();
+})(undefined, function () {
     "use strict";
 
-    const FORMAT_LIST = {
+    var FORMAT_LIST = {
         "l": "YYYY-MM-DD",
         "ll": "YYYY年MM月DD日",
         "k": "YYYY-MM-DD hh:mm",
@@ -16,23 +22,23 @@
         "nn": "MM月DD日"
     };
 
-    const _SECONDS = 1000;
-    const _MINUTES = 1000 * 60;
-    const _HOURS = 1000 * 60 * 60;
-    const _DAYS = 1000 * 60 * 60 * 24;
-    const _WEEKS = _DAYS * 7;
-    const _YEARS = _DAYS * 365;
-    const MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
+    var _SECONDS = 1000;
+    var _MINUTES = 1000 * 60;
+    var _HOURS = 1000 * 60 * 60;
+    var _DAYS = 1000 * 60 * 60 * 24;
+    var _WEEKS = _DAYS * 7;
+    var _YEARS = _DAYS * 365;
+    var MSE = new Date(1970, 0, 1, 0, 0, 0).getTime();
 
-    const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
-    const DAY_STRING = ['上午', '下午'];
-    let _moment = function () {
-        Utils.initMoment(this, ...arguments);
+    var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+    var DAY_STRING = ['上午', '下午'];
+    var _moment = function _moment() {
+        Utils.initMoment.apply(Utils, [this].concat(Array.prototype.slice.call(arguments)));
     };
 
-    let Utils = {
-        initMoment(moment_obj, arg_1, type) {
-            let _date = new Date(),
+    var Utils = {
+        initMoment: function initMoment(moment_obj, arg_1, type) {
+            var _date = new Date(),
                 date_bak = _date;
             if (arg_1 != undefined) {
                 if (Utils.isNumber(arg_1)) {
@@ -40,7 +46,7 @@
                     _date.setTime(arg_1);
                 } else if (Utils.isArray(arg_1)) {
                     Utils.padMonth(arg_1);
-                    _date = new Date(...arg_1);
+                    _date = new (Function.prototype.bind.apply(Date, [null].concat(_toConsumableArray(arg_1))))();
                 } else if (Utils.isDate(arg_1)) {
                     _date = arg_1;
                 } else if (Utils.isString(arg_1)) {
@@ -54,16 +60,16 @@
                 moment_obj.add(moment_obj.timeDelay, moment.TIME);
             }
         },
-        parse(str) {
-            let aspNetJsonRegex = /^(\d{4})\-?(\d{2})\-?(\d{2})\s?\:?(\d{2})?\:?(\d{2})?\:?(\d{2})?$/i;
+        parse: function parse(str) {
+            var aspNetJsonRegex = /^(\d{4})\-?(\d{2})\-?(\d{2})\s?\:?(\d{2})?\:?(\d{2})?\:?(\d{2})?$/i;
             var matched = aspNetJsonRegex.exec(str);
             if (matched !== null) {
                 matched.shift();
                 Utils.padMonth(matched);
                 Utils.popUndefined(matched);
-                return new Date(...matched);
+                return new (Function.prototype.bind.apply(Date, [null].concat(_toConsumableArray(matched))))();
             }
-            let date = new Date(str);
+            var date = new Date(str);
             if (date == "Invalid Date") {
                 console.error("Invalid date parse from \"" + str + "\"");
                 return null;
@@ -71,22 +77,22 @@
                 return date;
             }
         },
-        popUndefined(arr) {
+        popUndefined: function popUndefined(arr) {
             if (arr.length > 0 && arr[arr.length - 1] == undefined) {
                 arr.pop();
                 return Utils.popUndefined(arr);
             }
             return arr;
         },
-        padMonth(arr) {
+        padMonth: function padMonth(arr) {
             //自动补充月份
             if (arr.length > 1 && arr[1] > 0) arr[1] -= 1;
         },
-        isLeapYear(year) {
+        isLeapYear: function isLeapYear(year) {
             return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
         },
-        format(date, formatStr) {
-            let str = formatStr;
+        format: function format(date, formatStr) {
+            var str = formatStr;
             str = str.replace(/yyyy|YYYY/, date.getFullYear());
             str = str.replace(/yy|YY/, date.getYear() % 100 > 8 ? (date.getYear() % 100).toString() : '0' + date.getYear() % 100);
             str = str.replace(/MM/, date.getMonth() > 8 ? (date.getMonth() + 1).toString() : '0' + (date.getMonth() + 1));
@@ -103,34 +109,34 @@
             str = str.replace(/q|Q/g, date.getHours() > 12 ? DAY_STRING[1] : DAY_STRING[0]);
             return str;
         },
-        timestamp(date) {
+        timestamp: function timestamp(date) {
             return Math.floor(date.getTime() / 1000);
         },
-        getDays(date) {
+        getDays: function getDays(date) {
             return Math.floor((date.getTime() - MSE) / _DAYS);
         },
-        getHours(date) {
+        getHours: function getHours(date) {
             return Math.floor((date.getTime() - MSE) / _HOURS);
         },
-        getMonths(date) {
+        getMonths: function getMonths(date) {
             return date.getYear() * 12 + date.getMonth() + 1;
         },
-        isObject(input) {
+        isObject: function isObject(input) {
             return Object.prototype.toString.call(input) === '[object Object]';
         },
-        isArray(input) {
+        isArray: function isArray(input) {
             return input instanceof Array || Object.prototype.toString.call(input) === '[object Array]';
         },
-        isDate(input) {
+        isDate: function isDate(input) {
             return input instanceof Date || Object.prototype.toString.call(input) === '[object Date]';
         },
-        isNumber(input) {
+        isNumber: function isNumber(input) {
             return input instanceof Number || Object.prototype.toString.call(input) === '[object Number]';
         },
-        isString(input) {
+        isString: function isString(input) {
             return input instanceof String || Object.prototype.toString.call(input) === '[object String]';
         },
-        extend(a, b) {
+        extend: function extend(a, b) {
             for (var i in b) {
                 if (hasOwnProp(b, i)) {
                     a[i] = b[i];
@@ -147,7 +153,7 @@
 
             return a;
         },
-        makeGetSet(unit) {
+        makeGetSet: function makeGetSet(unit) {
             return function (value) {
                 if (value != undefined) {
                     // if(unit=="Month")value = value>0?(value-1):0;
@@ -167,30 +173,30 @@
 
     _moment.prototype = {
         timeDelay: 0,
-        format(str) {
-            let m = this;
+        format: function format(str) {
+            var m = this;
 
-            let v = this.isValid();
+            var v = this.isValid();
             if (v !== true) return v;
 
             str = str || "l";
-            let formatStr = FORMAT_LIST[str] || str;
+            var formatStr = FORMAT_LIST[str] || str;
             return Utils.format(m._date, formatStr);
         },
-        toString() {
-            let v = this.isValid();
+        toString: function toString() {
+            var v = this.isValid();
             if (v !== true) return v;
             return this._date.toString();
         },
-        toISOString() {
-            let v = this.isValid();
+        toISOString: function toISOString() {
+            var v = this.isValid();
             if (v !== true) return v;
             return this._date.toISOString();
         },
-        distance(_m, type) {
-            let v = this.isValid();
+        distance: function distance(_m, type) {
+            var v = this.isValid();
             if (v !== true) return v;
-            let m = this;
+            var m = this;
             type = type || moment.DAY;
             _m = moment(_m);
             v = _m.isValid();
@@ -207,20 +213,20 @@
             }
             return 0;
         },
-        getWeekOfYear(weekStart) {
-            let diff = 0;
+        getWeekOfYear: function getWeekOfYear(weekStart) {
+            var diff = 0;
             if (weekStart && weekStart == moment.MONDAY) {
                 diff = 1;
             }
-            let _date = this._date;
-            let year = _date.getFullYear();
-            let firstDay = new Date(year, 0, 1);
-            let firstWeekDays = 7 - firstDay.getDay() + diff;
-            let dayOfYear = (new Date(year, _date.getMonth(), _date.getDate()) - firstDay) / (24 * 3600 * 1000) + 1;
+            var _date = this._date;
+            var year = _date.getFullYear();
+            var firstDay = new Date(year, 0, 1);
+            var firstWeekDays = 7 - firstDay.getDay() + diff;
+            var dayOfYear = (new Date(year, _date.getMonth(), _date.getDate()) - firstDay) / (24 * 3600 * 1000) + 1;
             return Math.ceil((dayOfYear - firstWeekDays) / 7) + 1;
         },
-        getWeekOfMonth(weekStart) {
-            let diff = 0;
+        getWeekOfMonth: function getWeekOfMonth(weekStart) {
+            var diff = 0;
             if (weekStart && weekStart == moment.MONDAY) {
                 diff = 1;
             }
@@ -228,30 +234,30 @@
             var day = this.date();
             return Math.ceil((day - dayOfWeek - 1) / 7) + (dayOfWeek >= weekStart ? 1 : 0);
         },
-        isLeapYear() {
-            let v = this.isValid();
+        isLeapYear: function isLeapYear() {
+            var v = this.isValid();
             if (v !== true) return v;
             return Utils.isLeapYear(this.year());
         },
-        isThisYear() {
-            let v = this.isValid();
+        isThisYear: function isThisYear() {
+            var v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        isBefore() {
-            let v = this.isValid();
+        isBefore: function isBefore() {
+            var v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        isAfter() {
-            let v = this.isValid();
+        isAfter: function isAfter() {
+            var v = this.isValid();
             if (v !== true) return v;
             return Utils.timestamp(this._date);
         },
-        month(num) {
-            let v = this.isValid();
+        month: function month(num) {
+            var v = this.isValid();
             if (v !== true) return v;
-            let m = this;
+            var m = this;
             if (num == undefined) {
                 return m._date.getMonth() + 1;
             }
@@ -259,10 +265,10 @@
             num = m._date.setMonth(num - 1);
             return m;
         },
-        add(num, type) {
-            let v = this.isValid();
+        add: function add(num, type) {
+            var v = this.isValid();
             if (v !== true) return v;
-            let m = this;
+            var m = this;
             num = parseInt(num);
             type = type || moment.DAY;
 
@@ -271,8 +277,8 @@
                     m.time(m.time() + num * _DAYS);
                     break;
                 case moment.MONTH:
-                    let month_add = m.month() + num;
-                    let year_add = Math.floor(month_add / 12);
+                    var month_add = m.month() + num;
+                    var year_add = Math.floor(month_add / 12);
                     month_add = month_add % 12;
                     m.add(year_add, moment.YEAR);
                     m.month(month_add);
@@ -298,10 +304,10 @@
             }
             return m;
         },
-        endOf(type, set) {
-            let v = this.isValid();
+        endOf: function endOf(type, set) {
+            var v = this.isValid();
             if (v !== true) return v;
-            let m = this;
+            var m = this;
             type = type || moment.DAY;
             m.startOf(type, set);
             m.add(1, type);
@@ -312,10 +318,10 @@
             // }
             return m;
         },
-        startOf(type, set) {
-            let v = this.isValid();
+        startOf: function startOf(type, set) {
+            var v = this.isValid();
             if (v !== true) return v;
-            let m = this;
+            var m = this;
             type = type || moment.DAY;
             switch (type) {
                 case moment.DAY:
@@ -331,7 +337,7 @@
                 case moment.WEEK:
                     m.startOf(moment.DAY);
                     set = set || moment.SUNDAY;
-                    let startDay = set == moment.SUNDAY ? 0 : 1;
+                    var startDay = set == moment.SUNDAY ? 0 : 1;
                     if (m.day() == 0 && startDay == 1) {
                         startDay = -6;
                     }
@@ -348,14 +354,14 @@
             }
             return m;
         },
-        isValid() {
+        isValid: function isValid() {
             return Utils.isDate(this._date) ? true : "Invalid Date";
         }
     };
 
-    let momentPrototype__proto = _moment.prototype;
+    var momentPrototype__proto = _moment.prototype;
 
-    const methods = {
+    var methods = {
         "year": "FullYear",
         "day": "Day",
         "date": "Date",
@@ -366,11 +372,11 @@
         "time": "Time"
     };
 
-    for (let unit in methods) {
+    for (var unit in methods) {
         momentPrototype__proto[unit] = Utils.makeGetSet(methods[unit]);
     }
 
-    let moment = function (param) {
+    var moment = function moment(param) {
         if (param instanceof _moment) {
             return param;
         } else if (Utils.isObject(param)) {
