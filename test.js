@@ -9,7 +9,7 @@ var moment = require('./moment');
 
 // console.log(moment());
 
-console.log(moment().startOf(moment.WEEK,moment.SUNDAY).format("ff"))
+// console.log(moment().startOf(moment.WEEK,moment.SUNDAY).format("ff"))
 // console.log(moment('2016-07-23').distance(moment(),moment.DAY))
 
 // console.log(moment().toString());
@@ -54,7 +54,7 @@ console.log(moment().startOf(moment.WEEK,moment.SUNDAY).format("ff"))
 
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format("fff"));
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format("fff"));
-// console.log(moment("2016-07-22 ").distance(moment.NOW,moment.DAY));
+console.log(moment().distance("2016-09-26 14:50",moment.MINUTE));
 // console.log(moment())
 // console.log(moment('2016-07-22'))
 

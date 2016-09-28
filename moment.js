@@ -198,6 +198,8 @@
             v = _m.isValid();
             if(v!==true)return v;
             switch (type) {
+                case moment.MINUTE:
+                    return Math.floor((m.time() - _m.time())/60/1000);
                 case moment.HOUR:
                     return Utils.getHours(m._date) - Utils.getHours(_m._date);
                 case moment.DAY:
