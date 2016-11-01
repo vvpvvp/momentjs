@@ -4,7 +4,7 @@ var moment = require('./moment');
 //     formatString: {
 //         "r": "YYYY"
 //     },
-//     now:"2016-07-11T18:42:34.453+08:00"
+//     now:"2016-10-09"
 // });
 
 // console.log(moment());
@@ -54,7 +54,8 @@ var moment = require('./moment');
 
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.YEAR).format("fff"));
 // console.log(moment("2012-10-03 23:59:59").endOf(moment.MONTH).format("fff"));
-console.log(moment().distance("2016-09-26 14:50",moment.MINUTE));
+console.log(moment().startOf(moment.WEEK, moment.MONDAY).format());
+// console.log(global||window);
 // console.log(moment())
 // console.log(moment('2016-07-22'))
 

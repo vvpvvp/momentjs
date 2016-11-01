@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
         global.moment = factory();
-}(this, function() {
+}(global||window, function() {
     "use strict";
     const FORMAT_LIST = {
         "l": "YYYY-MM-DD",
